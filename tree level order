@@ -34,7 +34,7 @@ vector<vector<int>> levelOrder(TreeNode* root) {
     return result;
 }
 
-// Helper function to print result
+
 void printLevelOrder(const vector<vector<int>>& levels) {
     for (const auto& level : levels) {
         for (int val : level) cout << val << " ";
@@ -43,7 +43,7 @@ void printLevelOrder(const vector<vector<int>>& levels) {
 }
 
 int main() {
-    // Sample binary tree
+    
     TreeNode* root = new TreeNode(1);
     root->left = new TreeNode(2);
     root->right = new TreeNode(3);
