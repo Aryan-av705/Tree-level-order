@@ -5,58 +5,58 @@
 #include <vector>
 using namespace std;
 
-class Node{
-    public:
-    int data;
-    Node*left,*right;
-    
-  Node(int value){
-        data=value;
-        left=right=NULL;
-  }
+struct TreeNode {
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
-vector<int>LevelOrder(Node*root){
-    queue<Node*>q;
-     vector<int>ans;
-     if(root == NULL) 
-     return ans;
+vector<vector<int>> levelOrder(TreeNode* root) {
+    vector<vector<int>> result;
+    if (!root) return result;
+
+    queue<TreeNode*> q;
     q.push(root);
-      Node*temp;
-       while(!q.empty()){
-          temp=q.front();
-          q.pop();
-          ans.push_back(temp->data);
-          if(temp->left){
-              q.push(temp->left);
-          }
-          if(temp->right){
-              q.push(temp->right);
-          }
+
+    while (!q.empty()) {
+        int size = q.size();
+        vector<int> level;
+
+        for (int i = 0; i < size; i++) {
+            TreeNode* node = q.front(); q.pop();
+            level.push_back(node->val);
+
+            if (node->left) q.push(node->left);
+            if (node->right) q.push(node->right);
+        }
+        result.push_back(level);
     }
-    return ans;
+
+    return result;
 }
 
-Node* BinaryTree(){
-    int x;
-    cin>>x;
-    if(x==-1)
-     return NULL;
-     Node*temp=new Node(x);
-     cout<<"Enter the left child of "<<x<<": ";
-     temp->left=BinaryTree();
-     cout<<"Enter the right child of"<<x<<": ";
-     temp->right=BinaryTree();
-     return temp;
-}
-int main() {
-    cout << "Enter the root element: ";
-    Node* root = BinaryTree();
-    vector<int> result = LevelOrder(root);
-    cout << "Level order traversal: ";
-    for (int val : result) {
-        cout << val << " ";
+// Helper function to print result
+void printLevelOrder(const vector<vector<int>>& levels) {
+    for (const auto& level : levels) {
+        for (int val : level) cout << val << " ";
+        cout << "\n";
     }
-    cout << endl;
+}
+
+int main() {
+    
+    TreeNode* root = new TreeNode(1);
+    root->left = new TreeNode(2);
+    root->right = new TreeNode(3);
+    root->left->left = new TreeNode(4);
+    root->left->right = new TreeNode(5);
+    root->right->left = new TreeNode(6);
+    root->right->right = new TreeNode(7);
+
+    vector<vector<int>> levels = levelOrder(root);
+    printLevelOrder(levels);
+
     return 0;
 }
+
